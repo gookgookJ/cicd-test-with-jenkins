@@ -1,0 +1,26 @@
+{
+  "name": "cicd-test-with-jenkins",
+  "version": "1.0.0",
+  "description": "CI / CD 실습을 위한 레포지토리",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha test/test.js",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gookgookJ/cicd-test-with-jenkins.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gookgookJ/cicd-test-with-jenkins/issues"
+  },
+  "homepage": "https://github.com/gookgookJ/cicd-test-with-jenkins#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mocha": "^9.1.3",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
+  }
+}
