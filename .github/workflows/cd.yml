@@ -21,11 +21,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
-      - name: node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: npm 설치
         run: npm install
@@ -49,3 +44,8 @@ jobs:
 
       - name: Code Deploy
         run: aws deploy create-deployment --application-name code-deploy-test --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ci-cd-test --s3-location bucket=cicdtestbuckett,bundleType=zip,key=test/build-fe.zip
+        
+      - name: node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
