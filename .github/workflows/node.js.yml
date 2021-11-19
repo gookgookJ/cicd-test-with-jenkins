@@ -31,7 +31,7 @@ jobs:
             aws-region: ${{ secrets.TEST_AWS_REGION }}
           
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./build-fe.zip s3://cicdtestbuckett/test/build-fe.zip
+        run: aws s3 cp --region ap-northeast-2 test/build-fe.zip s3://cicdtestbuckett/test/build-fe.zip
 
       - name: Code Deploy
         run: aws deploy create-deployment --application-name code-deploy-test --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ci-cd-test --s3-location bucket=cicdtestbuckett,bundleType=zip,key=test/build-fe.zip
