@@ -41,7 +41,6 @@ jobs:
       - name: zip create
         run: zip -qq -r ./build-fe.zip
         shell: bash
-        working-directory: /build
     
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
