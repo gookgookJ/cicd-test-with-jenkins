@@ -1,32 +1,42 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: CD
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: CI / CD
 
 on:
+  pull_request:
+    branches: [ main ]
   push:
     branches: [ main ]
-        
+
 jobs:
-  backend:
-    name: CD with Node
-    runs-on: ubuntu-18.04
+  frontend:
+
+    runs-on: ubuntu-20.04
     defaults:
       run:
         shell: bash
         working-directory: client
+        
     strategy:
       matrix:
         node-version: [14.x, 16.x, 17.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: npm 설치
-        run: npm install
-
-      - name: npm 빌드
-        run: npm run build  
+        
+      - name: remove & reinstall dependencies
+        run: npm ci
+        
+      - name: Build
+        run: npm run build --if-present
+        
+      - name: Test
+        run: npm test
         
       - name: zip create
         run: zip -qq -r ./build-fe.zip
@@ -44,8 +54,4 @@ jobs:
 
       - name: Code Deploy
         run: aws deploy create-deployment --application-name code-deploy-test --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ci-cd-test --s3-location bucket=cicdtestbuckett,bundleType=zip,key=test/build-fe.zip
-        
-      - name: node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+
