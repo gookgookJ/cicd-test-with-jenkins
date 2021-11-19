@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v2
     
       - name: zip create
-        run: zip -qq -r test/build-fe.zip
+        run: zip -qq -r ./build-fe.zip
         shell: bash
     
       - name: Configure AWS credentials
